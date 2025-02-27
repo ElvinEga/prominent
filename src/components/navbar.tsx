@@ -112,38 +112,14 @@ const Navbar = () => {
                 aria-controls="hs-header-classic"
                 aria-label="Toggle navigation"
                 data-hs-collapse="#hs-header-classic"
+                onClick={() => {
+                  const navbar = document.getElementById("navbar");
+                  if (navbar) {
+                    navbar.classList.toggle("hidden");
+                  }
+                }}
               >
-                <svg
-                  className="hs-collapse-open:hidden size-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={24}
-                  height={24}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1={3} x2={21} y1={6} y2={6} />
-                  <line x1={3} x2={21} y1={12} y2={12} />
-                  <line x1={3} x2={21} y1={18} y2={18} />
-                </svg>
-                <svg
-                  className="hs-collapse-open:block shrink-0 hidden size-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={24}
-                  height={24}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M18 6 6 18" />
-                  <path d="m6 6 12 12" />
-                </svg>
+                <MenuIcon size={24} />
                 <span className="sr-only">Toggle navigation</span>
               </button>
             </div>
@@ -152,7 +128,6 @@ const Navbar = () => {
           {/* End Logo w/ Collapse Button */}
           {/* Collapse */}
           <div
-            id="hs-header-classic"
             className="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow md:block"
             aria-labelledby="hs-header-classic-collapse"
           >
@@ -191,6 +166,61 @@ const Navbar = () => {
                   <CartIndicator count={itemCount} />
                 </Link>
               </div>
+            </div>
+          </div>
+          <div
+            className="hidden w-full justify-between max-lg:bg-white max-lg:mt-1 max-lg:px-4 max-lg:py-4 max-lg:h-auto max-lg:overflow-auto  transition-all duration-500 delay-200"
+            id="navbar"
+          >
+            <ul className="flex lg:items-center max-lg:gap-4 max-lg:mb-4  flex-col mt-4 lg:flex-1 md:mt-0 lg:flex-row ">
+              <li>
+                <Link
+                  href="/"
+                  className="text-foreground text-lg font-normal hover:text-red-500 transition-all duration-500 mb-2 block lg:mr-6 lg:text-base"
+                >
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/about"
+                  className="text-foreground text-lg font-normal hover:text-red-500 transition-all duration-500 mb-2 block lg:mr-6 lg:text-base"
+                >
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/products"
+                  className="text-foreground text-lg font-normal hover:text-red-500 transition-all duration-500 mb-2 block lg:mr-6 lg:text-base"
+                >
+                  Products
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contact"
+                  className="text-foreground text-lg font-normal hover:text-red-500 transition-all duration-500 mb-2 block lg:mr-6 lg:text-base"
+                >
+                  Contact Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/cart"
+                  className="text-foreground w-full text-lg font-normal hover:text-red-500 transition-all duration-500 mb-2 block lg:mr-6 lg:text-base"
+                >
+                  <CartIndicator count={itemCount} />
+                </Link>
+              </li>
+            </ul>
+            <div className="flex lg:items-center justify-start flex-col lg:flex-row max-lg:gap-4 lg:flex-1 lg:justify-end">
+              <Link
+                href="/products"
+                className="bg-red-500 text-white rounded-full cursor-pointer font-normal text-center shadow-xs transition-all duration-500 py-3 px-6 text-sm lg:ml-5 hover:bg-red-700"
+              >
+                Order
+              </Link>
             </div>
           </div>
           {/* End Collapse */}

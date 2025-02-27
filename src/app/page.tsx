@@ -137,7 +137,7 @@ export default function Home() {
           {/* End Col */}
           <div>
             <Image
-              className="rounded-xl"
+              className="rounded-xl py-8"
               src="/images/feature2.jpeg"
               width={500}
               height={500}
