@@ -24,6 +24,7 @@ export default function Checkout() {
   );
   const [email, setEmail] = useState("customer@example.com");
   const [agreed, setAgreed] = useState(false);
+
   return (
     <div>
       {/* ========== HEADER ========== */}
