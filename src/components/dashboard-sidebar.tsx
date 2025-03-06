@@ -25,7 +25,6 @@ import {
   SidebarTrigger,
   SidebarInput,
 } from "@/components/ui/sidebar";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export function DashboardSidebar() {
   const pathname = usePathname();
@@ -44,16 +43,16 @@ export function DashboardSidebar() {
       isActive: pathname === "/products",
     },
     {
-      title: "Orders",
-      icon: ShoppingCart,
-      href: "/dashboard/orders",
-      isActive: pathname === "/orders",
-    },
-    {
       title: "Contacts",
       icon: Users,
       href: "/dashboard/contacts",
       isActive: pathname === "/contacts",
+    },
+    {
+      title: "Orders",
+      icon: ShoppingCart,
+      href: "/dashboard/orders",
+      isActive: pathname === "/orders",
     },
   ];
 
@@ -62,7 +61,9 @@ export function DashboardSidebar() {
       <SidebarHeader>
         <div className="flex items-center gap-2 px-4 py-2">
           <ShoppingCart className="h-6 w-6" />
-          <span className="text-xl font-bold">EcomAdmin</span>
+          <span className="text-xl font-bold text-primary">
+            Prominent Australia
+          </span>
         </div>
         <div className="px-2">
           <div className="relative">

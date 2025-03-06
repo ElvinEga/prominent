@@ -14,3 +14,26 @@ export async function GET() {
     );
   }
 }
+export async function POST(req: Request) {
+  try {
+    const { firstName, lastName, phone, email, details } = await req.json();
+
+    if (!firstName || !lastName || !phone || !email || !details) {
+      return NextResponse.json(
+        { error: "All fields are required" },
+        { status: 400 }
+      );
+    }
+
+    const contact = await prisma.contact.create({
+      data: { firstName, lastName, email, phone, details },
+    });
+
+    return NextResponse.json(contact, { status: 201 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to save contact" },
+      { status: 500 }
+    );
+  }
+}

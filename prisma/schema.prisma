@@ -25,6 +25,7 @@ model Contact {
   firstName String
   lastName  String
   phone     String
+  email    String
   details   String
   createdAt DateTime @default(now())
 }
