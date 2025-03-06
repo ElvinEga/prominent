@@ -10,6 +10,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { AlertCircle } from "lucide-react";
+
+import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -21,9 +24,16 @@ export default function Signup() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
 
+    // ✅ Convert FormData to JSON correctly
+    const userData = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      password: formData.get("password"),
+    };
+
     const res = await fetch("/api/auth/signup", {
       method: "POST",
-      body: JSON.stringify(Object.fromEntries(formData)),
+      body: JSON.stringify(userData),
       headers: { "Content-Type": "application/json" },
     });
 
@@ -42,15 +52,22 @@ export default function Signup() {
                 Enter your details to create new Account
               </CardDescription>
             </CardHeader>
+
             <CardContent>
-              {error && <p className="text-red-500">{error}</p>}
+              {error && (
+                <Alert variant="destructive" className="mb-6">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertTitle>{error}</AlertTitle>
+                </Alert>
+              )}
               <form onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-6">
                   <div className="grid gap-2">
                     <Label htmlFor="name">Name</Label>
                     <Input
                       id="name"
-                      type="name"
+                      name="name"
+                      type="text"
                       placeholder="Your Name"
                       required
                     />
@@ -60,6 +77,7 @@ export default function Signup() {
                     <Input
                       id="email"
                       type="email"
+                      name="email"
                       placeholder="m@example.com"
                       required
                     />
@@ -68,7 +86,12 @@ export default function Signup() {
                     <div className="flex items-center">
                       <Label htmlFor="password">Password</Label>
                     </div>
-                    <Input id="password" type="password" required />
+                    <Input
+                      id="password"
+                      name="password"
+                      type="password"
+                      required
+                    />
                   </div>
                   <Button type="submit" className="w-full">
                     Sign Up

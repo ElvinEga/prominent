@@ -12,6 +12,9 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Alert, AlertTitle } from "@/components/ui/alert";
+import Link from "next/link";
+import { AlertCircle } from "lucide-react";
 
 export default function Login() {
   const [error, setError] = useState("");
@@ -20,10 +23,14 @@ export default function Login() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
+    const userData = {
+      email: formData.get("email"),
+      password: formData.get("password"),
+    };
 
     const res = await fetch("/api/auth/login", {
       method: "POST",
-      body: JSON.stringify(Object.fromEntries(formData)),
+      body: JSON.stringify(userData),
       headers: { "Content-Type": "application/json" },
     });
 
@@ -43,7 +50,12 @@ export default function Login() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {error && <p className="text-red-500">{error}</p>}
+              {error && (
+                <Alert variant="destructive" className="mb-6">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertTitle>{error}</AlertTitle>
+                </Alert>
+              )}
               <form onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-6">
                   <div className="grid gap-2">
@@ -51,6 +63,7 @@ export default function Login() {
                     <Input
                       id="email"
                       type="email"
+                      name="email"
                       placeholder="m@example.com"
                       required
                     />
@@ -58,14 +71,19 @@ export default function Login() {
                   <div className="grid gap-2">
                     <div className="flex items-center">
                       <Label htmlFor="password">Password</Label>
-                      <a
+                      <Link
                         href="/signup"
                         className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                       >
                         Forgot your password?
-                      </a>
+                      </Link>
                     </div>
-                    <Input id="password" type="password" required />
+                    <Input
+                      id="password"
+                      name="password"
+                      type="password"
+                      required
+                    />
                   </div>
                   <Button type="submit" className="w-full">
                     Login
@@ -73,9 +91,9 @@ export default function Login() {
                 </div>
                 <div className="mt-4 text-center text-sm">
                   Don&apos;t have an account?{" "}
-                  <a href="/signup" className="underline underline-offset-4">
+                  <Link href="/signup" className="underline underline-offset-4">
                     Sign up
-                  </a>
+                  </Link>
                 </div>
               </form>
             </CardContent>
