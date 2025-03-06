@@ -14,45 +14,6 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { CartIndicator } from "./cart-indicator";
 
-const products = [
-  {
-    name: "Grammar Checker",
-    description: "Perfect your writing with grammar checking tool.",
-    icon: CheckCircle,
-    href: "/grammar-checker",
-  },
-  {
-    name: "Paraphraser",
-    description: "Rewrite and enhance your content effortlessly.",
-    icon: RefreshCcw,
-    href: "/paraphraser",
-  },
-  {
-    name: "Summarizer",
-    description: "Condense long texts into concise summaries quickly.",
-    icon: FileText,
-    href: "/summarizer",
-  },
-  {
-    name: "AI Humanizer",
-    description: "Make AI-generated content more human-like and natural.",
-    icon: Robot,
-    href: "/humanizer",
-  },
-  {
-    name: "AI Detector",
-    description: "Detect AI-generated content quickly and accurately.",
-    icon: UserCheck,
-    href: "/humanizer",
-  },
-  {
-    name: "Clone Writing Style",
-    description: "Adopt the writing style of your favorite authors.",
-    icon: CopyCheckIcon,
-    href: "/clone-writing-style",
-  },
-];
-
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const itemCount = useCartStore((state) => state.items.length);
@@ -156,10 +117,10 @@ const Navbar = () => {
                 </Link>
                 <button className="bg-red-500 inline-flex items-center gap-x-2 text-white px-6 py-2 rounded-md hover:bg-red-600">
                   <Link
-                    href="/products"
+                    href="/login"
                     className="inline-flex items-center gap-x-2"
                   >
-                    Order Now
+                    Login
                   </Link>
                 </button>
                 <Link href="/cart">
@@ -216,10 +177,10 @@ const Navbar = () => {
             </ul>
             <div className="flex lg:items-center justify-start flex-col lg:flex-row max-lg:gap-4 lg:flex-1 lg:justify-end">
               <Link
-                href="/products"
+                href="/login"
                 className="bg-red-500 text-white rounded-full cursor-pointer font-normal text-center shadow-xs transition-all duration-500 py-3 px-6 text-sm lg:ml-5 hover:bg-red-700"
               >
-                Order
+                Login
               </Link>
             </div>
           </div>
