@@ -12,7 +12,7 @@ interface CartStore {
   removeItem: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
-  total: number;
+  total: () => number; // ✅ Make total a function
 }
 
 export const useCartStore = create<CartStore>()(
@@ -46,12 +46,8 @@ export const useCartStore = create<CartStore>()(
         });
       },
       clearCart: () => set({ items: [] }),
-      get total() {
-        return get().items.reduce(
-          (sum, item) => sum + item.price * item.quantity,
-          0
-        );
-      },
+      total: () =>
+        get().items.reduce((sum, item) => sum + item.price * item.quantity, 0), // ✅ Fix total
     }),
     {
       name: "cart-storage",

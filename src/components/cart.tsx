@@ -10,7 +10,11 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 export default function CartList() {
-  const { items, removeItem, updateQuantity, total } = useCartStore();
+  const { items, removeItem, updateQuantity } = useCartStore();
+  const total = items.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
   const navigate = useRouter();
 
   if (items.length === 0) {

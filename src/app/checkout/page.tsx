@@ -17,9 +17,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useCartStore } from "@/store/cart";
+import { formatPrice } from "@/lib/utils";
 
 export default function Checkout() {
-  const [amount, setAmount] = useState("500.00");
+  const { items } = useCartStore();
+  const total = items.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+  // const [amount, setAmount] = useState("500.00");
   const [paymentMethod, setPaymentMethod] = useState("stripe");
   const [agreed, setAgreed] = useState(false);
   return (
@@ -36,33 +43,19 @@ export default function Checkout() {
             </h1>
           </div>
         </div>
-        <section className="text-gray-600 body-font">
+        <section className="body-font">
           <div className="py-24 mx-auto">
             <div className="p-6">
               <div className="mb-6 flex items-start justify-between">
                 <h2 className="text-xl font-semibold">
-                  Add funds to your account
+                  Select Payment Provider
                 </h2>
               </div>
               <div className="grid gap-6 md:grid-cols-2">
                 <div className="space-y-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="amount">
-                      Amount (USD): (Min amount: $0.01)
-                    </Label>
-                    <div className="relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-3xl text-muted-foreground">
-                        $
-                      </span>
-                      <Input
-                        id="amount"
-                        type="text"
-                        value={amount}
-                        onChange={(e) => setAmount(e.target.value)}
-                        className="py-6 pl-10 text-5xl"
-                      />
-                    </div>
-                  </div>
+                  <span className="font-semibold text-4xl">
+                    {formatPrice(total)}
+                  </span>
 
                   <div className="space-y-2">
                     <Label>Payment methods:</Label>
@@ -182,7 +175,7 @@ export default function Checkout() {
                     <div className="grid gap-1.5 leading-none">
                       <label
                         htmlFor="terms"
-                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        className="text-sm font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                       >
                         Yes, I understand and agree to the{" "}
                         <a href="#" className="text-primary hover:underline">
