@@ -32,9 +32,9 @@ model Contact {
 model Product {
   id          String  @id @default(uuid())
   name        String
-  imageUrl        String
+  imageUrl    String?
   description String?
-  price       Decimal
+  price       Float
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
