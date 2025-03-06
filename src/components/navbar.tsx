@@ -17,6 +17,7 @@ import { CartIndicator } from "./cart-indicator";
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const itemCount = useCartStore((state) => state.items.length);
+  const [userName, setUserName] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,6 +45,43 @@ const Navbar = () => {
     });
   }, []);
 
+  async function fetchUser() {
+    try {
+      const res = await fetch("/api/user", { credentials: "include" });
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch user data");
+      }
+
+      const data = await res.json();
+      if (data.email) {
+        setUserName(data.email);
+      }
+    } catch (error) {
+      console.error("Error fetching user:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  async function handleLogout() {
+    try {
+      const res = await fetch("/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+
+      if (res.ok) {
+        setUserName(null); // Clear username on logout
+      } else {
+        console.error("Failed to log out");
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  }
   return (
     <>
       <header className="bg-white border-b border-gray-200 flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full">
@@ -115,14 +153,24 @@ const Navbar = () => {
                 >
                   Contact Us
                 </Link>
-                <button className="bg-red-500 inline-flex items-center gap-x-2 text-white px-6 py-2 rounded-md hover:bg-red-600">
-                  <Link
-                    href="/login"
-                    className="inline-flex items-center gap-x-2"
+
+                {userName ? (
+                  <button
+                    onClick={handleLogout}
+                    className="bg-red-500 inline-flex items-center gap-x-2 text-white px-6 py-2 rounded-md hover:bg-red-600"
                   >
-                    Login
-                  </Link>
-                </button>
+                    Logout
+                  </button>
+                ) : (
+                  <button className="bg-red-500 inline-flex items-center gap-x-2 text-white px-6 py-2 rounded-md hover:bg-red-600">
+                    <Link
+                      href="/login"
+                      className="inline-flex items-center gap-x-2"
+                    >
+                      Login
+                    </Link>
+                  </button>
+                )}
                 <Link href="/cart">
                   <CartIndicator count={itemCount} />
                 </Link>

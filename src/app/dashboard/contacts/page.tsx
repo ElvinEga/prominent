@@ -38,9 +38,6 @@ export default function ContactsPage() {
         {/* Header */}
         <div className="border-b p-3 flex items-center justify-between bg-gray-100">
           <span className="text-gray-600 font-semibold">Recent Contacts</span>
-          <Button variant="outline" size="sm">
-            Refresh
-          </Button>
         </div>
 
         {/* Contacts List */}

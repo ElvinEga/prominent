@@ -10,6 +10,7 @@ interface Contact {
   id: string;
   firstName: string;
   lastName: string;
+  email: string;
   phone: string;
   details: string;
   createdAt: string;
@@ -42,6 +43,7 @@ export default function ContactDetailPage() {
           <h1 className="text-xl font-semibold">
             {contact.firstName} {contact.lastName}
           </h1>
+          <p className="text-gray-500 mb-2">{contact.email}</p>
           <p className="text-gray-500 mb-2">{contact.phone}</p>
           <p className="text-gray-800">{contact.details}</p>
           <p className="text-gray-400 text-sm mt-4">

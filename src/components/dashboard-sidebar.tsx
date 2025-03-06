@@ -25,10 +25,14 @@ import {
   SidebarTrigger,
   SidebarInput,
 } from "@/components/ui/sidebar";
+import { Button } from "./ui/button";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export function DashboardSidebar() {
   const pathname = usePathname();
-
+  const [userName, setUserName] = useState<string | null>(null);
+  const router = useRouter();
   const routes = [
     {
       title: "Dashboard",
@@ -55,6 +59,24 @@ export function DashboardSidebar() {
       isActive: pathname === "/orders",
     },
   ];
+
+  async function handleLogout() {
+    try {
+      const res = await fetch("/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+
+      if (res.ok) {
+        setUserName(null); // Clear username on logout
+        router.push("/login");
+      } else {
+        console.error("Failed to log out");
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  }
 
   return (
     <Sidebar>
@@ -94,10 +116,10 @@ export function DashboardSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
-              <Link href="/settings">
-                <Settings className="h-4 w-4" />
-                <span>Settings</span>
-              </Link>
+              <Button variant={"ghost"} onClick={handleLogout}>
+                <LogOut className="h-4 w-4" />
+                <span>Logout</span>
+              </Button>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { DashboardSidebar } from "./dashboard-sidebar";
 
 interface LayoutProviderProps {
@@ -29,9 +29,17 @@ export function LayoutProvider({ children }: LayoutProviderProps) {
         <SidebarProvider>
           <div className="relative flex min-h-screen w-full ">
             <DashboardSidebar />
-            <main className="flex-1 p-6 h-screen overflow-auto">
-              {children}
-            </main>
+            <div className="flex-1 flex flex-col">
+              <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-background px-6">
+                <SidebarTrigger className="lg:hidden" />
+                <div className="w-full flex-1">
+                  <h1 className="font-semibold text-lg">Prominent Australia</h1>
+                </div>
+              </header>
+              <main className="flex-1 p-6 h-screen overflow-auto">
+                {children}
+              </main>
+            </div>
           </div>
         </SidebarProvider>
       )}

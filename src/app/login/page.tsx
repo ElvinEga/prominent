@@ -34,8 +34,9 @@ export default function Login() {
       headers: { "Content-Type": "application/json" },
     });
 
-    if (res.ok) router.push("/dashboard");
-    else setError("Invalid credentials");
+    if (res.ok) {
+      router.push("/dashboard");
+    } else setError("Invalid credentials");
   }
 
   return (
