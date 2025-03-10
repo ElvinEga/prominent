@@ -4,12 +4,12 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, ShoppingCart } from "lucide-react";
-// import { useToast } from "@/components/hooks/use-toast";
 import { getProduct } from "@/lib/api";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useCartStore } from "@/store/cart";
 import { Product } from "@/store/product";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -17,7 +17,6 @@ export default function ProductDetail() {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useRouter();
-  // const { toast } = useToast();
   const addItem = useCartStore((state) => state.addItem);
 
   useEffect(() => {
@@ -26,11 +25,7 @@ export default function ProductDetail() {
         const data = await getProduct(productId.toString());
         setProduct(data);
       } catch (error) {
-        // toast({
-        //   title: "Error",
-        //   description: "Failed to load product details",
-        //   variant: "destructive",
-        // });
+        console.error(error);
       } finally {
         setLoading(false);
       }
@@ -42,16 +37,29 @@ export default function ProductDetail() {
   const handleAddToCart = () => {
     if (product) {
       addItem(product);
-      // toast({
-      //   title: "Success",
-      //   description: "Product added to cart",
-      // });
       navigate.push("/cart");
     }
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="container mx-auto p-6">
+        <Skeleton className="h-10 w-32 mb-6" />
+        <Card>
+          <CardContent className="p-6">
+            <div className="grid gap-8 md:grid-cols-2">
+              <Skeleton className="h-[400px] w-full" />
+              <div>
+                <Skeleton className="h-10 w-3/4 mb-4" />
+                <Skeleton className="h-8 w-1/2 mb-4" />
+                <Skeleton className="h-6 w-full mb-6" />
+                <Skeleton className="h-12 w-full mt-8" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
   }
 
   if (!product) {
@@ -70,14 +78,14 @@ export default function ProductDetail() {
           <div className="grid gap-8 md:grid-cols-2">
             <div className="relative h-[400px]">
               <Image
-                src={product.thumbnail}
-                alt={product.title}
+                src={product.imageUrl}
+                alt={product.name}
                 className="rounded-lg object-cover"
               />
             </div>
             <div>
               <div className="mb-4">
-                <h1 className="mb-2 text-3xl font-bold">{product.title}</h1>
+                <h1 className="mb-2 text-3xl font-bold">{product.name}</h1>
                 <p className="mb-4 text-4xl font-bold text-primary">
                   ${product.price}
                 </p>

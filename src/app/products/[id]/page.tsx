@@ -29,11 +29,7 @@ export default function ProductDetails() {
         const data = await getProduct(productId.toString());
         setProduct(data);
       } catch (error) {
-        // toast({
-        //   title: "Error",
-        //   description: "Failed to load product details",
-        //   variant: "destructive",
-        // });
+        console.error(error);
       } finally {
         setLoading(false);
       }
@@ -58,7 +54,7 @@ export default function ProductDetails() {
       <Navbar />
       {/* ========== END HEADER ========== */}
       {/* Hero */}
-      {/* <SubHero title=product.title} bgImage="/images/hero2.jpeg" /> */}
+      {/* <SubHero title=product.name} bgImage="/images/hero2.jpeg" /> */}
 
       <div className="container mx-auto p-6">
         <Button
@@ -69,14 +65,15 @@ export default function ProductDetails() {
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Products
         </Button>
+
         {product && (
           <Card>
             <CardContent className="p-12">
               <div className="grid gap-8 md:grid-cols-2">
                 <div className="relative h-[400px]">
                   <Image
-                    src={product.thumbnail}
-                    alt={product.title}
+                    src={product.imageUrl}
+                    alt={product.name}
                     layout="fill"
                     objectFit="cover"
                     className="rounded-lg object-cover"
@@ -84,7 +81,7 @@ export default function ProductDetails() {
                 </div>
                 <div>
                   <div className="mb-4">
-                    <h1 className="mb-2 text-3xl font-bold">{product.title}</h1>
+                    <h1 className="mb-2 text-3xl font-bold">{product.name}</h1>
                     <p className="mb-4 text-4xl font-bold text-primary">
                       ${product.price}
                     </p>

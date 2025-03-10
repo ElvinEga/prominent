@@ -24,14 +24,14 @@ export default function ProductCard({ product }: ProductCardProps) {
     >
       <div className="relative h-48 w-full">
         <Image
-          src={product.thumbnail}
+          src={product.imageUrl}
           layout="fill"
           objectFit="cover"
-          alt={product.title}
+          alt={product.name}
         />
       </div>
       <CardContent className="p-4">
-        <h3 className="mb-2 text-lg font-semibold">{product.title}</h3>
+        <h3 className="mb-2 text-lg font-semibold">{product.name}</h3>
         <p className="text-2xl font-bold text-primary">${product.price}</p>
       </CardContent>
       <CardFooter className="p-4 pt-0">

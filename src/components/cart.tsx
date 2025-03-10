@@ -50,15 +50,15 @@ export default function CartList() {
                   <CardContent className="flex items-center p-4">
                     <div className="relative h-24 w-24 flex-shrink-0">
                       <Image
-                        src={item.thumbnail}
-                        alt={item.title}
+                        src={item.imageUrl}
+                        alt={item.name}
                         layout="fill"
                         objectFit="cover"
                         className="rounded object-cover"
                       />
                     </div>
                     <div className="ml-4 flex-grow">
-                      <h3 className="font-semibold">{item.title}</h3>
+                      <h3 className="font-semibold">{item.name}</h3>
                       <p className="mb-2 text-sm text-muted-foreground">
                         {formatPrice(item.price)}
                       </p>
